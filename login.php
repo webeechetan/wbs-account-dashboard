@@ -1,15 +1,14 @@
-
 <?php
 include 'includes/DB.php';
 $msg = false;
 $db = new DB();
-if(isset($_POST['email'])){
+if (isset($_POST['email'])) {
     $email = $db->santize($_POST['email']);
     $password = $db->santize($_POST['password']);
     $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
-    if($db->select($sql)){
+    if ($db->select($sql)) {
         header("location: index.php");
-    }else{
+    } else {
         $msg = "Invalid email or password";
     }
 }
@@ -48,36 +47,36 @@ if(isset($_POST['email'])){
     </header>
 
     <!-- Body -->
-   <section class="wbs-account-login">
-     <div class="container">
-        <div class="row">
-            <div class="col-md-6 mx-auto">
-                  <div class="account-login">
-                    <form method="post" action="" class="login">
-                        <div class="avatar"><i class="bi bi-person"></i></div>
-                        <h4 class="modal-title">Login to Your Account</h4>
-                        <?php if($msg): ?>
-                            <?php echo $msg;?>
-                        <?php endif;?>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id= "email" name="email" placeholder="Username" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required">
-                        </div>
-                        <div class="form-group small clearfix">
-                            <label class="checkbox-inline"><input type="checkbox"> Remember me</label>
-                            <a href="#" class="forgot-link">Forgot Password?</a>
-                        </div> 
-                        <input type="submit" class="btn btn-primary w-100" value="Login">              
-                    </form>			
-    <div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>
-                    </form>
-                  </div>
+    <section class="wbs-account-login">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="account-login">
+                        <form method="post" action="" class="login">
+                            <div class="avatar"><i class="bi bi-person"></i></div>
+                            <h4 class="modal-title">Login to Your Account</h4>
+                            <?php if ($msg) : ?>    
+                                <?php echo $msg; ?>
+                            <?php endif; ?>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Username" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required">
+                            </div>
+                            <div class="form-group small clearfix">
+                                <label class="checkbox-inline"><input type="checkbox"> Remember me</label>
+                                <a href="#" class="forgot-link">Forgot Password?</a>
+                            </div>
+                            <input type="submit" class="btn btn-primary w-100" value="Login">
+                        </form>
+                        <div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-     </div>
-   </section>
+    </section>
 
     <!-- Js-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

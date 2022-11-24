@@ -1,41 +1,34 @@
 <?php
+require 'vendor/autoload.php';
+use Carbon\Carbon;
+include 'includes/functions.php';
 include 'includes/DB.php';
+
 $db = new DB();
 $msg = false;
-
+$now = Carbon::now();
 if(isset($_POST['description']) && isset($_POST['field_name'])){
     $description = $db->santize($_POST['description']);
     $field_name = $db->santize($_POST['field_name']);
     $project_id = $_GET['id'];
-    $check_old_entries = $db->select("SELECT * FROM project_details WHERE project_id = '$project_id'");
-    if($check_old_entries){
-        $sql = "UPDATE project_details SET $field_name = '$description' WHERE project_id = '$project_id'";
-        if($db->update($sql)){
-            $msg =  "Updated";
-        }else{
-            $msg = "Failed";
-        }
-    }else{
-        $sql = "INSERT INTO project_details (project_id, $field_name) VALUES ('$project_id', '$description')";
-        if($db->insert($sql)){
-            $msg = "Inserted";
-        }else{
-            $msg = "Failed";
-        }
+    $result = checkProjectDetails($project_id, $field_name, $description);
+    if($result){
+        $msg = "Successfully Done";
     }
+
+    
 }
 
 
 if(isset($_GET['id'])){
     $project_id = $_GET['id'];
-    $account = $db->select("SELECT * FROM project_details WHERE project_id = '$project_id'");
+    $account = $db->select("SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY id DESC LIMIT 1");
     if($account){
         $account = $account->fetch_assoc();
     }
 }else{
     header("location: index.php");
 }
-
 
 ?>
 <!doctype html>
@@ -76,6 +69,28 @@ if(isset($_GET['id'])){
    
     <section class="account-wrap">
         <div class="container-fluid px-lg-5">
+            <div class="row text-center mb-4">
+                <div class="col-md-4 offset-4">
+                    <h2 class="text-primary">Filter</h2>
+                    <div class="form-group">
+                        <select name="" id="" class="form-control">
+                            <option value="">View Logs</option>
+                            <?php
+                                $sql = "SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY id DESC LIMIT 30";
+                                $result = $db->select($sql);
+                                if($result){
+                                    while($row = $result->fetch_assoc()){
+                                        $id = $row['id'];
+                                        $date = $row['created_at'];
+                                        $date = Carbon::parse($date)->format('d M Y');
+                                        echo "<option value='$id'>$date</option>";
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <!-- Page Features-->
             <div class="row">
                 <?php if($msg): ?>
