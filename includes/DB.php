@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Asia/Kolkata');
+
 class DB {
     private $host = 'localhost';
     private $user = 'root';
