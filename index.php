@@ -1,24 +1,18 @@
 <?php
 include 'includes/DB.php';
 include 'includes/functions.php';
-
+$msg = false;
 $db = new DB();
 if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
     $project_name = $db->santize($_POST['project_name']);
-
-
     $sql = "INSERT INTO `projects` (project_name) VALUES ('$project_name')";
 
     if($db->insert($sql)){
-        echo "Project Added successfully ";
-
+        $msg = "Project Added successfully ";
     }else{
-        echo "Something went wrong ";
+        $mg = "Something went wrong ";
     }
 }
-
-///////
-
 
 ?>
 
@@ -64,46 +58,28 @@ if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
 
     <!-- Body -->
     <section class="content-wrap">
-
+        <?php if($msg): ?>
+            <div class="text-center"><?php echo $msg; ?></div>
+        <?php endif; ?>
         <div class="container px-lg-5">
+        <div class="row ac-list">
 
         <?php 
          $sql = "SELECT * FROM projects WHERE status != 'deleted' ";
-
          $projects = $db->select($sql);
-         $projects_count = mysqli_num_rows($projects);
-
-         if($projects_count> 0){
-
-            // $row = mysqli_fetch_assoc($projects);
-            // echo var_dump($row);
-            // echo "<br>";
-            // echo var_dump($row);
-            // echo "<br>";
-
-            while($project = mysqli_fetch_assoc($projects)){
-
-                echo $project['project_name'];
-                echo "<br>";
-            }
-         }
-
-
-
+        while($project = mysqli_fetch_assoc($projects)){
         ?>
-            <!-- Page Features-->
-            <div class="row ac-list">
                 <div class="col-sm-4 col-md-3 mb-5">
                     <div class="card bg-light border-0 h-100">
                         <div class="card-body text-center pt-0">
                             <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4"><i class="bi bi-person-vcard"></i></div>
-                            <h2 class="fs-4 fw-bold"></h2>
-                            <a href="account.html" class="btn btn-primary">View Account</a>
+                            <h2 class="fs-4 fw-bold"><?php echo $project['project_name'];?></h2>
+                            <a href="account.php?id=<?php echo $project['id']?>" class="btn btn-primary">View Account</a>
                         </div>
                     </div>
                 </div>
+                <?php }?>
             </div>
-
         </div>
     </section>
 

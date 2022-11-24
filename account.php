@@ -2,10 +2,11 @@
 include 'includes/DB.php';
 $db = new DB();
 $msg = false;
+
 if(isset($_POST['description']) && isset($_POST['field_name'])){
     $description = $db->santize($_POST['description']);
     $field_name = $db->santize($_POST['field_name']);
-    $project_id = '1';
+    $project_id = $_GET['id'];
     $check_old_entries = $db->select("SELECT * FROM project_details WHERE project_id = '$project_id'");
     if($check_old_entries){
         $sql = "UPDATE project_details SET $field_name = '$description' WHERE project_id = '$project_id'";
@@ -24,9 +25,15 @@ if(isset($_POST['description']) && isset($_POST['field_name'])){
     }
 }
 
-$account = $db->select("SELECT * FROM project_details WHERE project_id = '1'");
-if($account){
-    $account = $account->fetch_assoc();
+
+if(isset($_GET['id'])){
+    $project_id = $_GET['id'];
+    $account = $db->select("SELECT * FROM project_details WHERE project_id = '$project_id'");
+    if($account){
+        $account = $account->fetch_assoc();
+    }
+}else{
+    header("location: index.php");
 }
 
 

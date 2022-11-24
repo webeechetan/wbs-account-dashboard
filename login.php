@@ -1,20 +1,16 @@
 
 <?php
 include 'includes/DB.php';
-
+$msg = false;
 $db = new DB();
 if(isset($_POST['email'])){
     $email = $db->santize($_POST['email']);
     $password = $db->santize($_POST['password']);
-
-
     $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
     if($db->select($sql)){
-        echo "Login Success";
-        header("Location: http://localhost/wbs-account-dashboard/");
-
+        header("location: index.php");
     }else{
-        echo "Login Failed";
+        $msg = "Invalid email or password";
     }
 }
 ?>
@@ -60,6 +56,9 @@ if(isset($_POST['email'])){
                     <form method="post" action="" class="login">
                         <div class="avatar"><i class="bi bi-person"></i></div>
                         <h4 class="modal-title">Login to Your Account</h4>
+                        <?php if($msg): ?>
+                            <?php echo $msg;?>
+                        <?php endif;?>
                         <div class="form-group">
                             <input type="text" class="form-control" id= "email" name="email" placeholder="Username" required="required">
                         </div>
