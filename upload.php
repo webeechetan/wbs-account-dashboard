@@ -6,6 +6,6 @@ move_uploaded_file($tmp_dir, 'uploads/'.$image);
 $response = array( 
     "uploaded" => 1, 
     "fileName" => $image, 
-    "url" => $upload_dir['img'].$image 
+    "url" => 'uploads/'.$image 
 );
 echo json_encode($response);

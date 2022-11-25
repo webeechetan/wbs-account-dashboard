@@ -9,42 +9,19 @@ include 'includes/DB.php';
 $db = new DB();
 $msg = false;
 $now = Carbon::now();
-if (isset($_POST['description']) && isset($_POST['field_name'])) {
-    $description = $db->santize($_POST['description']);
-    $field_name = $db->santize($_POST['field_name']);
-    $files = [];
-    if (isset($_FILES['files'])) {
-
-        $files = $_FILES['files'];
-        $files_array = [];
-        foreach ($files['name'] as $key => $value) {
-            $image = $files['name'][$key];
-            $tmp_dir = $files['tmp_name'][$key];
-            move_uploaded_file($tmp_dir, 'uploads/' . $image);
-            $description .= '<br /><a href="uploads/' . $image . '" /> '.$image.' </a>';
-            $files_array[] = $image;
-        }
-        $files = implode(',', $files_array);
-    }
-
-    $project_id = $_GET['id'];
-    $result = checkProjectDetails($project_id, $field_name, $description);
-    if ($result) {
-        $msg = "Successfully Done";
-    }
-}
-
-
-if (isset($_GET['id'])) {
-    $project_id = $_GET['id'];
-    $account = $db->select("SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY id DESC LIMIT 1");
+if(isset($_POST['project_id'])){
+    $date = $_POST['date'];
+    $project_id = $_POST['project_id'];
+    $date = Carbon::parse($date);
+    $date = $date->format('Y-m-d');
+    $sql = "SELECT * FROM project_details WHERE project_id = '$project_id' AND created_at LIKE '$date%'";
+    $account = $db->select($sql);
     if ($account) {
         $account = $account->fetch_assoc();
     }
-} else {
+}else{
     header("location: index.php");
-}
-
+}   
 ?>
 <!doctype html>
 <html lang="en">
@@ -84,26 +61,8 @@ if (isset($_GET['id'])) {
 
     <section class="account-wrap">
         <div class="container-fluid px-lg-5">
-            <div class="row text-center mb-4">
-                <div class="col-md-4 offset-4">
-                    <h2 class="text-primary">Logs</h2>
-                    <small class="text-muted">Total Logs : <b><?php echo totalLogs($_GET['id']); ?></b></small>
-                    <br>
-                    <small class="text-muted">Last Log Date : <b><?php echo lastLogDate($_GET['id']); ?></b></small>
-                    <div class="form-group">
-                        <form method="POST" action="view-logs.php">
-                            <input type="date" required class="form-control" name="date">
-                            <input type="hidden" name="project_id" value="<?php echo $_GET['id']?>">
-                            <button class="btn btn-success mt-3">View</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
             <!-- Page Features-->
             <div class="row">
-                <?php if ($msg) : ?>
-                    <div class="text-center mb-3"><?php echo $msg; ?></div>
-                <?php endif; ?>
                 <div class="col-sm-4 col-md-3 mb-4">
                     <div class="card bg-card border-0 h-100">
                         <div class="card-body text-center">
@@ -111,9 +70,7 @@ if (isset($_GET['id'])) {
                                 <div class="sow-name">
                                     <h4><span class="bi bi-file-earmark-text pe-2"></span>Sow</h4>
                                 </div>
-                                <div class="edit-button">
-                                    <a class=" btn sow-edit open_modal" data-title='Sow' data-field='sow'><i class="bi bi-pencil-square"></i></a>
-                                </div>
+                                
                             </div>
                             <div class="sow-content" id="sow">
                                 <?php
@@ -122,8 +79,8 @@ if (isset($_GET['id'])) {
 
                             </div>
                             <div class="edit-button mt-2">
-                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
-                              </div>  
+                                <a class=" btn sow-edit" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>
+                            </div>
 
                         </div>
                     </div>
@@ -137,18 +94,12 @@ if (isset($_GET['id'])) {
                                         <div class="sow-name">
                                             <h4><span class="bi bi-ticket-detailed pe-2"></span>Spoc Details</h4>
                                         </div>
-                                        <div class="edit-button">
-                                            <a class=" btn sow-edit open_modal" data-title='Spoc Details' data-field='spoc_details'><i class="bi bi-pencil-square"></i></a>
-                                        </div>
                                     </div>
                                     <div class="sow-content" id="spoc_details">
                                         <?php if ($account) {
                                             echo $account['spoc_details'];
                                         } ?>
                                     </div>
-                                    <div class="edit-button mt-2">
-                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
-                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -159,18 +110,12 @@ if (isset($_GET['id'])) {
                                         <div class="sow-name">
                                             <h4><span class="bi bi-people pe-2"></span>Wbs Teams</h4>
                                         </div>
-                                        <div class="edit-button">
-                                            <a class=" btn sow-edit open_modal" data-title='Wbs Teams' data-field='wbs_teams'><i class="bi bi-pencil-square"></i></a>
-                                        </div>
                                     </div>
                                     <div class="sow-content" id="wbs_teams">
                                         <?php if ($account) {
                                             echo $account['wbs_teams'];
                                         } ?>
                                     </div>
-                                    <div class="edit-button mt-2">
-                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
-                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -183,18 +128,12 @@ if (isset($_GET['id'])) {
                                 <div class="sow-name">
                                     <h4><span class="bi bi-people pe-2"></span>Work Detail</h4>
                                 </div>
-                                <div class="edit-button">
-                                    <a class=" btn sow-edit open_modal" data-title='Work Detail' data-field='work_details'><i class="bi bi-pencil-square"></i></a>
-                                </div>
                             </div>
                             <div class="sow-content" id="work_details">
                                 <?php if ($account) {
                                     echo $account['work_details'];
                                 } ?>
                             </div>
-                            <div class="edit-button mt-2">
-                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
-                            </div>  
                         </div>
                     </div>
                 </div>
@@ -207,18 +146,12 @@ if (isset($_GET['id'])) {
                                         <div class="sow-name">
                                             <h4><span class="bi bi-people pe-2"></span>Customer Relatiionship</h4>
                                         </div>
-                                        <div class="edit-button">
-                                            <a class=" btn sow-edit open_modal" data-title='Customer Relatiionship' data-field='customer_relationships'><i class="bi bi-pencil-square"></i></a>
-                                        </div>
                                     </div>
                                     <div class="sow-content" id="customer_relationships">
                                         <?php if ($account) {
                                             echo $account['customer_relationships'];
                                         } ?>
                                     </div>
-                                    <div class="edit-button mt-2">
-                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
-                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -229,18 +162,12 @@ if (isset($_GET['id'])) {
                                         <div class="sow-name">
                                             <h4><span class="bi bi-people pe-2"></span>Deadlines</h4>
                                         </div>
-                                        <div class="edit-button">
-                                            <a class=" btn sow-edit open_modal" data-title='Deadlines' data-field='deadlines'><i class="bi bi-pencil-square"></i></a>
-                                        </div>
                                     </div>
                                     <div class="sow-content" id="deadlines">
                                         <?php if ($account) {
                                             echo $account['deadlines'];
                                         } ?>
                                     </div>
-                                    <div class="edit-button mt-2">
-                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
-                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -254,18 +181,12 @@ if (isset($_GET['id'])) {
                                 <div class="sow-name">
                                     <h4><span class="bi bi-people pe-2"></span>Last Meeting</h4>
                                 </div>
-                                <div class="edit-button">
-                                    <a class=" btn sow-edit open_modal" data-title='Last Meeting' data-field='last_meetings'><i class="bi bi-pencil-square"></i></a>
-                                </div>
                             </div>
                             <div class="sow-content" id="last_meetings">
                                 <?php if ($account) {
                                     echo $account['last_meetings'];
                                 } ?>
                             </div>
-                            <div class="edit-button mt-2">
-                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
-                           </div>  
                         </div>
                     </div>
                 </div>
@@ -276,18 +197,12 @@ if (isset($_GET['id'])) {
                                 <div class="sow-name">
                                     <h4><span class="bi bi-people pe-2"></span>Account Status Remarks</h4>
                                 </div>
-                                <div class="edit-button">
-                                    <a class=" btn sow-edit open_modal" data-title='Account Status Remarks' data-field='account_status'><i class="bi bi-pencil-square"></i></a>
-                                </div>
                             </div>
                             <div class="sow-content" id="account_status">
                                 <?php if ($account) {
                                     echo $account['account_status'];
                                 } ?>
                             </div>
-                            <div class="edit-button mt-2">
-                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
-                            </div>  
                         </div>
                     </div>
                 </div>
@@ -298,63 +213,18 @@ if (isset($_GET['id'])) {
                                 <div class="sow-name">
                                     <h4><span class="bi bi-people pe-2"></span>Billing Details</h4>
                                 </div>
-                                <div class="edit-button">
-                                    <a class=" btn sow-edit open_modal" data-title='Billing Details' data-field='billing_details'><i class="bi bi-pencil-square"></i></a>
-                                </div>
                             </div>
                             <div class="sow-content" id="billing_details">
                                 <?php if ($account) {
                                     echo $account['billing_details'];
                                 } ?>
                             </div>
-                            <div class="edit-button mt-2">
-                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
-                            </div>  
-                        </div>
-                    </div>
-                </div>          
-              
-            </div>
-            <!---- Modal Popup ---->
-
-            <div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modal_title"></h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form method="POST" enctype="multipart/form-data">
-                            <div class="modal-body">
-                                <textarea class="form-control" name="description" id="description"></textarea>
-                                <input type="file" multiple name="files[]">
-
-                            </div>
-                            <input type="hidden" name="field_name" id="field_name">
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-light">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!----- View Modal-->
-            <div class="modal fade" id="viewmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h4 class="modal-title" id="view_modal_title">View</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <textarea class="form-control" name="description" id="description"></textarea>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
-    </section>
+
+            </div>
 
     <!-- Js-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
