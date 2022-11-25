@@ -37,7 +37,7 @@ if (isset($_POST['description']) && isset($_POST['field_name'])) {
 
 if (isset($_GET['id'])) {
     $project_id = $_GET['id'];
-    $account = $db->select("SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY id DESC LIMIT 1");
+    $account = $db->select("SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY created_at DESC LIMIT 1");
     if ($account) {
         $account = $account->fetch_assoc();
     }
@@ -122,7 +122,7 @@ if (isset($_GET['id'])) {
 
                             </div>
                             <div class="edit-button mt-2">
-                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                <a class=" btn sow-edit open_view_modal" ><i class="bi bi-eye"></i></a>  
                               </div>  
 
                         </div>
@@ -147,7 +147,7 @@ if (isset($_GET['id'])) {
                                         } ?>
                                     </div>
                                     <div class="edit-button mt-2">
-                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                         <a class=" btn sow-edit open_view_modal" ><i class="bi bi-eye"></i></a>  
                                     </div>  
                                 </div>
                             </div>
@@ -169,7 +169,7 @@ if (isset($_GET['id'])) {
                                         } ?>
                                     </div>
                                     <div class="edit-button mt-2">
-                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                         <a class=" btn sow-edit open_view_modal" ><i class="bi bi-eye"></i></a>  
                                     </div>  
                                 </div>
                             </div>
@@ -193,7 +193,7 @@ if (isset($_GET['id'])) {
                                 } ?>
                             </div>
                             <div class="edit-button mt-2">
-                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                <a class=" btn sow-edit open_view_modal" ><i class="bi bi-eye"></i></a>  
                             </div>  
                         </div>
                     </div>
@@ -217,7 +217,7 @@ if (isset($_GET['id'])) {
                                         } ?>
                                     </div>
                                     <div class="edit-button mt-2">
-                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                         <a class=" btn sow-edit open_view_modal" ><i class="bi bi-eye"></i></a>  
                                     </div>  
                                 </div>
                             </div>
@@ -239,7 +239,7 @@ if (isset($_GET['id'])) {
                                         } ?>
                                     </div>
                                     <div class="edit-button mt-2">
-                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                         <a class=" btn sow-edit open_view_modal" ><i class="bi bi-eye"></i></a>  
                                     </div>  
                                 </div>
                             </div>
@@ -264,7 +264,7 @@ if (isset($_GET['id'])) {
                                 } ?>
                             </div>
                             <div class="edit-button mt-2">
-                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                <a class=" btn sow-edit open_view_modal" ><i class="bi bi-eye"></i></a>  
                            </div>  
                         </div>
                     </div>
@@ -286,7 +286,7 @@ if (isset($_GET['id'])) {
                                 } ?>
                             </div>
                             <div class="edit-button mt-2">
-                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                <a class="btn sow-edit open_view_modal" ><i class="bi bi-eye"></i></a>  
                             </div>  
                         </div>
                     </div>
@@ -308,7 +308,7 @@ if (isset($_GET['id'])) {
                                 } ?>
                             </div>
                             <div class="edit-button mt-2">
-                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                <a class=" btn sow-edit open_view_modal" ><i class="bi bi-eye"></i></a>  
                             </div>  
                         </div>
                     </div>
@@ -346,8 +346,8 @@ if (isset($_GET['id'])) {
                         <h4 class="modal-title" id="view_modal_title">View</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <textarea class="form-control" name="description" id="description"></textarea>
+                        <div class="modal-body view_modal_content">
+                            
                         </div>
                     </div>
                 </div>
@@ -360,9 +360,7 @@ if (isset($_GET['id'])) {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/classic/ckeditor.js"></script>
-    <!-- <script src="//cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <script src="js/upload.js"></script>
     <script src="js/index.js"></script>
 
 </body>

@@ -8,7 +8,6 @@ $(document).ready(function () {
         })
         .then(editor => {
             content_editor = editor;
-            console.log(editor);
         })
         .catch(error => {
             console.error(error);
@@ -25,13 +24,16 @@ $(document).ready(function () {
     });
 
 
-
     $(".open_view_modal").click(function () {
-        
-        
+        let content = $(this).parent().parent().find('.sow-content');
+        $(".view_modal_content").html(content);
         $("#viewmodal").modal('show');
-        
     });
 
+
+    $(".sow-content").each(function (e) {
+        let table = $(this).find('table');
+        table.addClass('table table-bordered');
+    });
 
 });

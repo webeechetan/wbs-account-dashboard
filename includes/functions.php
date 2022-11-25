@@ -10,7 +10,7 @@ $now = Carbon::now();
 function checkProjectDetails(int $project_id, string $field, string $description){
   $now = Carbon::now();
   $db = new DB();
-  $sql = "SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY id DESC LIMIT 1";
+  $sql = "SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY created_at DESC LIMIT 1";
   $latest_project_details = $db->select($sql);
   if ($latest_project_details) {
     $latest_project_details = mysqli_fetch_assoc($latest_project_details);
@@ -51,7 +51,7 @@ function updateProjectDetails(int $id, string $field, string $value){
 function copyAndUpdateProjectDetailsRow(int $project_id, string $field, string $value){
   $db = new DB();
   $now = Carbon::now();
-  $project_details = $db->select("SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY id DESC LIMIT 1");
+  $project_details = $db->select("SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY created_at DESC LIMIT 1");
   if ($project_details) {
     $project_details = mysqli_fetch_assoc($project_details);
     $project_details['project_id'] = $project_id;
@@ -88,7 +88,7 @@ function totalLogs(int $project_id){
 
 function lastLogDate(int $project_id){
   $db = new DB();
-  $sql = "SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY id ASC LIMIT 1";
+  $sql = "SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY created_at ASC LIMIT 1";
   $result = $db->select($sql);
   if ($result) {
     $result = mysqli_fetch_assoc($result);

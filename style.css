@@ -152,4 +152,11 @@ a {
     padding: 12px 25px;
  }
 
+ table{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #000;
+    font-size: 12px;
+ }
+
  
