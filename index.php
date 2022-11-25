@@ -1,14 +1,18 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 
 include 'includes/DB.php';
 include 'includes/functions.php';
+
+checkAuth();
 $msg = false;
 $db = new DB();
 if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
     $project_name = $db->santize($_POST['project_name']);
     $sql = "INSERT INTO `projects` (project_name) VALUES ('$project_name')";
-
     if($db->insert($sql)){
         $msg = "Project Added successfully ";
     }else{

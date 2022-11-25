@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Kolkata');
 class DB {
     private $host = 'localhost';
     private $user = 'root';
-    private $pass = '';
+    private $pass = 'db@secure2021webeetest';
     private $dbname = 'wbs_account';
     private $conn;
     public $last_insert_id;
