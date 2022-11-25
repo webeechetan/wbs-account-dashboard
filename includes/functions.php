@@ -98,3 +98,9 @@ function lastLogDate(int $project_id){
   }
   return 'No Logs';
 }
+
+function checkAuth(){
+  if(!isset($_SESSION['email'])){
+    header('location:login.php');
+  }
+}

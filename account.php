@@ -5,6 +5,8 @@ use Carbon\Carbon;
 
 include 'includes/functions.php';
 include 'includes/DB.php';
+session_start();
+checkAuth();
 
 $db = new DB();
 $msg = false;
