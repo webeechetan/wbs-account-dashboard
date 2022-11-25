@@ -27,6 +27,9 @@ $(document).ready(function () {
     $(".open_view_modal").click(function () {
         let content = $(this).parent().parent().find('.sow-content');
         $(".view_modal_content").html(content);
+        let title = $(this).data('title');
+        $('#view_modal_title').html(title);
+
         $("#viewmodal").modal('show');
     });
 
