@@ -75,3 +75,26 @@ function copyAndUpdateProjectDetailsRow(int $project_id, string $field, string $
   }
   return false;
 }
+
+function totalLogs(int $project_id){
+  $db = new DB();
+  $sql = "SELECT * FROM project_details WHERE project_id = '$project_id' ";
+  $result = $db->select($sql);
+  if ($result) {
+    return mysqli_num_rows($result) - 1;
+  }
+  return 'No Logs';
+}
+
+function lastLogDate(int $project_id){
+  $db = new DB();
+  $sql = "SELECT * FROM project_details WHERE project_id = '$project_id' ORDER BY id ASC LIMIT 1";
+  $result = $db->select($sql);
+  if ($result) {
+    $result = mysqli_fetch_assoc($result);
+    $created_at = $result['created_at'];
+    $created_at = Carbon::parse($created_at);
+    return $created_at->format('d-m-Y');
+  }
+  return 'No Logs';
+}
