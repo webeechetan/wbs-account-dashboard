@@ -10,7 +10,12 @@ if (isset($_POST['email'])) {
     if ($db->select($sql)) {
 
         $_SESSION['email']= $email; 
-        header("location: index.php");
+
+        if(isset($_SESSION['email'])){
+            header("location: index.php");
+        }else {
+                header("location: login.php");
+             }
     } else {
         $msg = "Invalid email or password";
     }
