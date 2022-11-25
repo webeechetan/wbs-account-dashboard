@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include 'includes/DB.php';
 include 'includes/functions.php';
 $msg = false;
@@ -48,7 +50,7 @@ if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
                 </div>
 
                 <div class="col-4 text-end">
-                    <a href="#" class="ac-logout"><i class="bi bi-lock"></i> Logout</a>
+                    <a href="logout.php"  class="ac-logout" id= "user_logout"><i class="bi bi-lock"></i> Logout</a>
                 </div>
             </div>
         </div>
@@ -58,6 +60,7 @@ if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
 
     <!-- Body -->
     <section class="content-wrap">
+
         <?php if($msg): ?>
             <div class="text-center"><?php echo $msg; ?></div>
         <?php endif; ?>
@@ -66,9 +69,12 @@ if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
 
         <?php 
          $sql = "SELECT * FROM projects WHERE status != 'deleted' ";
+
          $projects = $db->select($sql);
-        while($project = mysqli_fetch_assoc($projects)){
-        ?>
+
+         if($projects) {
+            while($project = mysqli_fetch_assoc($projects)){
+            ?>
                 <div class="col-sm-4 col-md-3 mb-5">
                     <div class="card bg-light border-0 h-100">
                         <div class="card-body text-center pt-0">
@@ -78,7 +84,7 @@ if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
                         </div>
                     </div>
                 </div>
-                <?php }?>
+                <?php } }?>
             </div>
         </div>
     </section>
@@ -112,6 +118,7 @@ if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
     <!-- Js-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
 
 </body>
 
