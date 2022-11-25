@@ -23,4 +23,15 @@ $(document).ready(function () {
         let content = $("#" + field).html();
         content_editor.setData(content);
     });
+
+
+
+    $(".open_view_modal").click(function () {
+        
+        
+        $("#viewmodal").modal('show');
+        
+    });
+
+
 });

@@ -122,8 +122,8 @@ if (isset($_GET['id'])) {
 
                             </div>
                             <div class="edit-button mt-2">
-                                <a class=" btn sow-edit" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>
-                            </div>
+                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                              </div>  
 
                         </div>
                     </div>
@@ -146,6 +146,9 @@ if (isset($_GET['id'])) {
                                             echo $account['spoc_details'];
                                         } ?>
                                     </div>
+                                    <div class="edit-button mt-2">
+                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -165,6 +168,9 @@ if (isset($_GET['id'])) {
                                             echo $account['wbs_teams'];
                                         } ?>
                                     </div>
+                                    <div class="edit-button mt-2">
+                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -186,6 +192,9 @@ if (isset($_GET['id'])) {
                                     echo $account['work_details'];
                                 } ?>
                             </div>
+                            <div class="edit-button mt-2">
+                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                            </div>  
                         </div>
                     </div>
                 </div>
@@ -207,6 +216,9 @@ if (isset($_GET['id'])) {
                                             echo $account['customer_relationships'];
                                         } ?>
                                     </div>
+                                    <div class="edit-button mt-2">
+                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -226,6 +238,9 @@ if (isset($_GET['id'])) {
                                             echo $account['deadlines'];
                                         } ?>
                                     </div>
+                                    <div class="edit-button mt-2">
+                                         <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -248,6 +263,9 @@ if (isset($_GET['id'])) {
                                     echo $account['last_meetings'];
                                 } ?>
                             </div>
+                            <div class="edit-button mt-2">
+                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                           </div>  
                         </div>
                     </div>
                 </div>
@@ -267,6 +285,9 @@ if (isset($_GET['id'])) {
                                     echo $account['account_status'];
                                 } ?>
                             </div>
+                            <div class="edit-button mt-2">
+                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                            </div>  
                         </div>
                     </div>
                 </div>
@@ -286,11 +307,13 @@ if (isset($_GET['id'])) {
                                     echo $account['billing_details'];
                                 } ?>
                             </div>
+                            <div class="edit-button mt-2">
+                                <a class=" btn sow-edit open_view_modal" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>  
+                            </div>  
                         </div>
                     </div>
-                </div>
-
-
+                </div>          
+              
             </div>
             <!---- Modal Popup ---->
 
@@ -320,11 +343,11 @@ if (isset($_GET['id'])) {
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="">View</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h4 class="modal-title" id="view_modal_title">View</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-
+                            <textarea class="form-control" name="description" id="description"></textarea>
                         </div>
                     </div>
                 </div>
