@@ -75,7 +75,7 @@ if (isset($_GET['id'])) {
                     <img src="https://www.webeesocial.com/wp-content/uploads/2020/12/logo-tm-white-compressed.png" alt="" width="125">
                 </div>
                 <div class="col-6 text-end">
-                    <a href="#" class="ac-logout"><i class="bi bi-lock"></i> Logout</a>
+                    <a href="logout.php" class="ac-logout"><i class="bi bi-lock"></i> Logout</a>
                 </div>
             </div>
         </div>
