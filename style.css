@@ -1,7 +1,7 @@
 :root {
     --primary: #51B174;
     --secondary: #F7D600;
-    --bg-card: #D9ECF8;
+    --bg-card: #51b17430;
     --card-header: #6A256E;
 }
 body {
@@ -24,32 +24,40 @@ body {
     padding-top: 90px;
     padding-bottom: 90px;
 }
+
 a {
     text-decoration: none;
     transition: all 0.3s ease;
+    color: var(--card-header);
+}
+.form-control:focus{
+    outline: none;
+    box-shadow: none !important;
 }
 .btn-primary {
     background-color: var(--secondary);
-    border: none;
+    border: 1px solid var(--secondary);
     color: #000;
     font-weight: 500;
+}
+.breadcrumb{
+    justify-content: end;
+}
+.breadcrumb-item a{
+     color: var(--card-header) !important;
+}
+.breadcrumb-item.active{
+    color: var(--primary) !important;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
     color: #fff;
     background-color: var(--primary);
     outline: none;
     box-shadow: none;
+    border-color: var(--primary);
 }
-.ac-logout {
-    color: #fff;
-    font-size: 1.2em;
-    border-bottom: 2px solid var(--secondary);
-    padding-bottom: 5px;
-    padding-right: 5px;
-}
-.ac-logout:hover {
-    color: #000;
-    border-color: #000;
+.ac-logout.btn-primary:hover{
+    border: 1px solid #fff;
 }
 /* ----- Feature Css ----- */
 .feature {
@@ -84,48 +92,32 @@ a {
     font-weight: 600;
    color: var(--card-header);
 }
-.edit-button .btn{
-  color: var(--card-header);
-  padding: 0px !important;  
+.card-wrap{
+    min-height: 100%;
+    background: #fff;
 }
-
-.edit-button .btn:hover, .edit-button .btn:active, .edit-button .btn:focus {
-    color: var(--card-header);
-    border: none !important;
-    box-shadow: none;
-    outline: none;
-    transition: all 0.3s ease ;
-    
-}
-.sow-edit:hover ,.sow-edit:active, .sow-edit:focus{
-    color: #fff;
-    border: none;
-    box-shadow: none;
-    outline: none;
-    transition: all 0.3s ease ;
-}
-.sow-content{
+.card-content{
     background-color: #fff;
     color: #000;
-    height: 200px;
+    height: 160px;
     width: 100%;
     padding: 10px;
-    text-align: justify;
-    overflow-y: scroll;
+    text-align: left;
+    overflow-y: auto;
     font-size: 12px;
 }
-.sow-content::-webkit-scrollbar-track
+.card-content::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	background-color: var(--bg-card);
 }
-.sow-content::-webkit-scrollbar
+.card-content::-webkit-scrollbar
 {
 	width: 4px;
 	background-color: var(--bg-card);
     border-radius: 7px;
 }
-.sow-content::-webkit-scrollbar-thumb
+.card-content::-webkit-scrollbar-thumb
 {
 	background-color: var(--card-header);
 }
@@ -158,5 +150,98 @@ a {
     border: 1px solid #000;
     font-size: 12px;
  }
+  /*---- Login Accounts ----*/
 
- 
+.wbs-account-login{
+    position: fixed;
+    right: 0;
+    left: 0;
+    background-color: var(--primary);
+    width: 100%;
+    height: 100vh;
+
+}
+.account-login {
+    width: 350px;
+    margin: 0 auto;
+    padding: 30px 0;
+}
+.account-login form {
+    color: #434343;
+    margin-bottom: 15px;
+    background: #fff;
+    border: 1px solid #f3f3f3;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    border-radius: 10px;
+}
+.h-big{
+    min-height: 390px;
+}
+.account-login h4 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+.account-login .avatar {
+    color: #000;
+    margin: 0 auto 10px;
+    text-align: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    z-index: 9;
+    background: var(--secondary);
+    padding: 15px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+.account-login .avatar i {
+    font-size: 30px;
+    line-height: 0;
+}
+.account-login .form-group {
+    margin-bottom: 20px;
+}
+.account-login .form-control, .account-login .btn {
+    min-height: 40px;
+    border-radius: 10px; 
+    transition: all 0.5s;
+}
+.account-login .form-control:focus, .account-login .form-control:active, .account-login .form-control:visited{
+    box-shadow: none;
+    outline: none;
+}
+.account-login .btn {
+    background: var(--secondary);
+    border: none;
+    line-height: normal;
+}
+.account-login .btn:hover, .account-login .btn:focus {
+    background: var(--primary);
+}
+.project-msg{
+    background-color: var(--primary);
+    color: white;
+    padding: 10px 25px;
+    border-radius: 10px;
+    width: 300px;
+}
+/*---- report ----*/
+.report-card small {
+    border: 1px solid #ddd;
+    padding: 9px 15px;
+    display: inline-block;
+    border-radius: 4px;
+}
+.report-card h4 {
+    margin-bottom: 20px;
+    color: var(--card-header);
+}
+.report-card select {
+    max-width: 200px;
+}
+.btn:focus{
+    box-shadow: none !important;
+    outline: none;
+}
+

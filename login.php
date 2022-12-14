@@ -42,9 +42,6 @@ if (isset($_POST['email'])) {
                 <div class="col-6">
                     <img src="https://www.webeesocial.com/wp-content/uploads/2020/12/logo-tm-white-compressed.png" alt="" width="125">
                 </div>
-                <div class="col-6 text-end">
-                    <a href="logout.php" class="ac-logout"><i class="bi bi-lock"></i>Logout</a>
-                </div>
             </div>
         </div>
     </header>
@@ -58,9 +55,7 @@ if (isset($_POST['email'])) {
                         <form method="post" action="" class="login">
                             <div class="avatar"><i class="bi bi-person"></i></div>
                             <h4 class="modal-title">Login to Your Account</h4>
-                            <?php if ($msg) : ?>    
-                                <?php echo $msg; ?>
-                            <?php endif; ?>
+                           
                             <div class="form-group">
                                 <input type="text" class="form-control" id="email" name="email" placeholder="Username" required="required">
                             </div>
@@ -68,6 +63,11 @@ if (isset($_POST['email'])) {
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required">
                             </div>
                             <input type="submit" class="btn btn-primary w-100" value="Login">
+                            <?php if ($msg) : ?>    
+                                <div class="text-danger text-center mt-1">
+                                    <?php echo $msg; ?>
+                                </div>
+                            <?php endif; ?>
                     </div>
                 </div>
             </div>

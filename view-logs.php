@@ -9,19 +9,21 @@ include 'includes/DB.php';
 $db = new DB();
 $msg = false;
 $now = Carbon::now();
-if(isset($_POST['project_id'])){
+if (isset($_POST['project_id'])) {
     $date = $_POST['date'];
     $project_id = $_POST['project_id'];
     $date = Carbon::parse($date);
     $date = $date->format('Y-m-d');
-    $sql = "SELECT * FROM project_details WHERE project_id = '$project_id' AND created_at LIKE '$date%'";
+    $sql = "SELECT * FROM project_details WHERE project_id = '$project_id' AND created_at LIKE '$date%' LIMIT 1";
     $account = $db->select($sql);
     if ($account) {
         $account = $account->fetch_assoc();
     }
-}else{
+} else {
     header("location: index.php");
-}   
+}
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -50,17 +52,45 @@ if(isset($_POST['project_id'])){
                     <img src="https://www.webeesocial.com/wp-content/uploads/2020/12/logo-tm-white-compressed.png" alt="" width="125">
                 </div>
                 <div class="col-6 text-end">
-                    <a href="#" class="ac-logout"><i class="bi bi-lock"></i> Logout</a>
+                    <a href="logout.php" class="ac-logout"><i class="bi bi-lock"></i> Logout</a>
                 </div>
             </div>
         </div>
     </header>
 
+    <?php
+    $projectid = $account['project_id'];
+    ?>
     <!-- Body -->
-
-
     <section class="account-wrap">
         <div class="container-fluid px-lg-5">
+            <div class="row mb-3">
+                <div class="col-md-12 text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+
+
+
+                            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                            <?php if (isset($projectid)) {
+
+                                $sql = "SELECT * FROM projects WHERE id = '$projectid' ";
+                                $wb_project = $db->select($sql);
+                                if ($wb_project) {
+                                    $wb_project = $wb_project->fetch_assoc();
+                            ?>
+                                    <li class="breadcrumb-item"><a href="account.php?id=<?php echo $projectid; ?>">
+                                            <?php echo isset($wb_project) ? $wb_project['project_name'] : 'Account'; ?>
+                                        </a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        <?php echo isset($wb_project) ? $wb_project['project_name'] : 'Account'; ?>
+                                    </li>
+                            <?php  }
+                            } ?>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
             <!-- Page Features-->
             <div class="row">
                 <div class="col-sm-4 col-md-3 mb-4">
@@ -70,18 +100,17 @@ if(isset($_POST['project_id'])){
                                 <div class="sow-name">
                                     <h4><span class="bi bi-file-earmark-text pe-2"></span>Sow</h4>
                                 </div>
-                                
+                                <div class="edit-button">
+                                    <a class=" btn sow-edit open_view_modal" data-title='Sow'><i class="bi bi-eye"></i></a>
+                                </div>
                             </div>
                             <div class="sow-content" id="sow">
                                 <?php
-                                if ($account) { echo $account['sow']; }
+                                if ($account) {
+                                    echo $account['sow'];
+                                }
                                 ?>
-
                             </div>
-                            <div class="edit-button mt-2">
-                                <a class=" btn sow-edit" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="bi bi-eye"></i></a>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -93,6 +122,9 @@ if(isset($_POST['project_id'])){
                                     <div class="d-flex justify-content-between bg-card sow mb-1">
                                         <div class="sow-name">
                                             <h4><span class="bi bi-ticket-detailed pe-2"></span>Spoc Details</h4>
+                                        </div>
+                                        <div class="edit-button">
+                                            <a class=" btn sow-edit open_view_modal" data-title='Spoc Details'><i class="bi bi-eye"></i></a>
                                         </div>
                                     </div>
                                     <div class="sow-content" id="spoc_details">
@@ -109,6 +141,9 @@ if(isset($_POST['project_id'])){
                                     <div class="d-flex justify-content-between bg-card sow">
                                         <div class="sow-name">
                                             <h4><span class="bi bi-people pe-2"></span>Wbs Teams</h4>
+                                        </div>
+                                        <div class="edit-button">
+                                            <a class=" btn sow-edit open_view_modal" data-title='Wbs Teams'><i class="bi bi-eye"></i></a>
                                         </div>
                                     </div>
                                     <div class="sow-content" id="wbs_teams">
@@ -128,6 +163,9 @@ if(isset($_POST['project_id'])){
                                 <div class="sow-name">
                                     <h4><span class="bi bi-people pe-2"></span>Work Detail</h4>
                                 </div>
+                                <div class="edit-button">
+                                    <a class=" btn sow-edit open_view_modal" data-title='Work Detail'><i class="bi bi-eye"></i></a>
+                                </div>
                             </div>
                             <div class="sow-content" id="work_details">
                                 <?php if ($account) {
@@ -146,6 +184,9 @@ if(isset($_POST['project_id'])){
                                         <div class="sow-name">
                                             <h4><span class="bi bi-people pe-2"></span>Customer Relatiionship</h4>
                                         </div>
+                                        <div class="edit-button">
+                                            <a class=" btn sow-edit open_view_modal" data-title='Customer Relatiionship'><i class="bi bi-eye"></i></a>
+                                        </div>
                                     </div>
                                     <div class="sow-content" id="customer_relationships">
                                         <?php if ($account) {
@@ -161,6 +202,9 @@ if(isset($_POST['project_id'])){
                                     <div class="d-flex justify-content-between bg-card sow mb-1">
                                         <div class="sow-name">
                                             <h4><span class="bi bi-people pe-2"></span>Deadlines</h4>
+                                        </div>
+                                        <div class="edit-button">
+                                            <a class=" btn sow-edit open_view_modal" data-title='Deadlines'><i class="bi bi-eye"></i></a>
                                         </div>
                                     </div>
                                     <div class="sow-content" id="deadlines">
@@ -181,6 +225,9 @@ if(isset($_POST['project_id'])){
                                 <div class="sow-name">
                                     <h4><span class="bi bi-people pe-2"></span>Last Meeting</h4>
                                 </div>
+                                <div class="edit-button">
+                                    <a class=" btn sow-edit open_view_modal" data-title='Last Meeting'><i class="bi bi-eye"></i></a>
+                                </div>
                             </div>
                             <div class="sow-content" id="last_meetings">
                                 <?php if ($account) {
@@ -196,6 +243,9 @@ if(isset($_POST['project_id'])){
                             <div class="d-flex justify-content-between bg-card sow mb-3">
                                 <div class="sow-name">
                                     <h4><span class="bi bi-people pe-2"></span>Account Status Remarks</h4>
+                                </div>
+                                <div class="edit-button">
+                                    <a class=" btn sow-edit open_view_modal" data-title='Account Status Remarks'><i class="bi bi-eye"></i></a>
                                 </div>
                             </div>
                             <div class="sow-content" id="account_status">
@@ -213,6 +263,9 @@ if(isset($_POST['project_id'])){
                                 <div class="sow-name">
                                     <h4><span class="bi bi-people pe-2"></span>Billing Details</h4>
                                 </div>
+                                <div class="edit-button">
+                                    <a class=" btn sow-edit open_view_modal" data-title='Billing Details'><i class="bi bi-eye"></i></a>
+                                </div>
                             </div>
                             <div class="sow-content" id="billing_details">
                                 <?php if ($account) {
@@ -222,18 +275,30 @@ if(isset($_POST['project_id'])){
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
-    <!-- Js-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/classic/ckeditor.js"></script>
-    <!-- <script src="//cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script> -->
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <script src="js/upload.js"></script>
-    <script src="js/index.js"></script>
+            <div class="modal fade" id="viewmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="view_modal_title"></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body view_modal_content">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Js-->
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+            <script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/classic/ckeditor.js"></script>
+            <!-- <script src="//cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script> -->
+            <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+            <script src="js/upload.js"></script>
+            <script src="js/index.js"></script>
 
 </body>
 

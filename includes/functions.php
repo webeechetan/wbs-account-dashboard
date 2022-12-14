@@ -30,7 +30,10 @@ function createNewProjectDetails(int $project_id, string $field, string $value){
   $db = new DB();
   $now = Carbon::now();
   $sql = "INSERT INTO project_details (project_id, $field, created_at) VALUES ('$project_id', '$value', '$now')";
+
+
   $result = $db->insert($sql);
+
   if ($result) {
     return true;
   }

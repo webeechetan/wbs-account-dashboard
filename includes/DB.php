@@ -56,5 +56,13 @@ class DB {
             return false;
         }
     }
+
+    public function query($sql){
+        $result = $this->conn->query($sql);
+        if($result){
+            return $this->conn->insert_id;
+        }
+        return false;
+    }
 }
 ?>
